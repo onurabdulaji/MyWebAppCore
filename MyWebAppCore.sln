@@ -3,9 +3,28 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34309.116
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Backend", "Backend", "{6BFA1BF3-43A0-45C3-94B1-B19DAF65399D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontend", "Frontend", "{43F8129D-1159-4546-BF3C-9C4FCF089413}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.WebApi", "Backend\Project.WebApi\Project.WebApi.csproj", "{E18F6623-484C-44D8-A618-F5DC0D58AFED}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E18F6623-484C-44D8-A618-F5DC0D58AFED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E18F6623-484C-44D8-A618-F5DC0D58AFED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E18F6623-484C-44D8-A618-F5DC0D58AFED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E18F6623-484C-44D8-A618-F5DC0D58AFED}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E18F6623-484C-44D8-A618-F5DC0D58AFED} = {6BFA1BF3-43A0-45C3-94B1-B19DAF65399D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {488822DB-4B1F-4E38-840B-B279D7AC6807}
