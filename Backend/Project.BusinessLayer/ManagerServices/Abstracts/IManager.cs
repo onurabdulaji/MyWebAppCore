@@ -27,5 +27,12 @@ namespace Project.BusinessLayer.ManagerServices.Abstracts
         Task TAddAsync(T entity);
         Task<T> TFirstOrDefaultAsync(Expression<Func<T, bool>> exp);
         Task<T> TGetByIdAsync(int id);
+
+        // Cqrs
+
+        Task<List<T>> TGetAllAsync();
+        Task TCreateAsync(T entity);
+        Task TUpdateAsync(T entity);
+        Task TRemoveAsync(T entity);
     }
 }

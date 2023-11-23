@@ -23,24 +23,24 @@ namespace Project.DataAccessLayer.Repositories.Concretes
 
         public void Add(T entity)
         {
-            entity.Status = DataStatus.Inserted;
-            entity.InsertedDate = DateTime.Now;
             _db.Add(entity);
             _db.SaveChanges();
         }
 
         public async Task AddAsync(T entity)
         {
-            entity.Status = DataStatus.Inserted;
-            entity.InsertedDate = DateTime.Now;
             await _db.AddAsync(entity);
+            await _db.SaveChangesAsync();
+        }
+
+        public async Task CreateAsync(T entity)
+        {
+            await _db.Set<T>().AddAsync(entity);
             await _db.SaveChangesAsync();
         }
 
         public void Delete(T entity)
         {
-            entity.Status = DataStatus.Deleted;
-            entity.DeletedDate = DateTime.Now;
             _db.Remove(entity);
             _db.SaveChanges();
         }
@@ -53,6 +53,11 @@ namespace Project.DataAccessLayer.Repositories.Concretes
         public async Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> exp)
         {
             return await _db.Set<T>().FirstOrDefaultAsync(exp);
+        }
+
+        public async Task<List<T>> GetAllAsync()
+        {
+            return await _db.Set<T>().ToListAsync();
         }
 
         public T GetById(int id)
@@ -80,12 +85,22 @@ namespace Project.DataAccessLayer.Repositories.Concretes
             return _db.Set<T>().AsQueryable();
         }
 
+        public async Task RemoveAsync(T entity)
+        {
+            _db.Set<T>().Remove(entity);
+            await _db.SaveChangesAsync();
+        }
+
         public void Update(T entity)
         {
-            entity.Status = DataStatus.Updated;
-            entity.UpdatedDate = DateTime.Now;
             _db.Update(entity);
             _db.SaveChanges();
+        }
+
+        public async Task UpdateAsync(T entity)
+        {
+            _db.Set<T>().Update(entity);
+            await _db.SaveChangesAsync();
         }
     }
 }

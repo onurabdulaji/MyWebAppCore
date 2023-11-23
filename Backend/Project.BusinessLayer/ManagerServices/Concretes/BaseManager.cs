@@ -21,19 +21,21 @@ namespace Project.BusinessLayer.ManagerServices.Concretes
 
         public void TAdd(T entity)
         {
-            entity.InsertedDate = DateTime.Now;
             _iRepository.Add(entity);
         }
 
         public async Task TAddAsync(T entity)
         {
-            entity.InsertedDate = DateTime.Now;
             await _iRepository.AddAsync(entity);
+        }
+
+        public async Task TCreateAsync(T entity)
+        {
+            await _iRepository.CreateAsync(entity);
         }
 
         public void TDelete(T entity)
         {
-            entity.DeletedDate = DateTime.Now;
             _iRepository.Delete(entity);
         }
 
@@ -45,6 +47,11 @@ namespace Project.BusinessLayer.ManagerServices.Concretes
         public async Task<T> TFirstOrDefaultAsync(Expression<Func<T, bool>> exp)
         {
             return await _iRepository.FirstOrDefaultAsync(exp);
+        }
+
+        public async Task<List<T>> TGetAllAsync()
+        {
+            return await _iRepository.GetAllAsync();
         }
 
         public T TGetById(int id)
@@ -72,10 +79,19 @@ namespace Project.BusinessLayer.ManagerServices.Concretes
             return _iRepository.GetListQuery();
         }
 
+        public async Task TRemoveAsync(T entity)
+        {
+            await _iRepository.RemoveAsync(entity);
+        }
+
         public void TUpdate(T entity)
         {
-            entity.UpdatedDate = DateTime.Now;
             _iRepository.Update(entity);
+        }
+
+        public async Task TUpdateAsync(T entity)
+        {
+            await _iRepository.UpdateAsync(entity);
         }
     }
 }

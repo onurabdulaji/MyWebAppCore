@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Project.BusinessLayer.Mediator.Commands.AboutCommands;
 using Project.BusinessLayer.Mediator.Queries.AboutQuery;
 
 namespace Project.WebApi.Controllers
@@ -17,10 +18,16 @@ namespace Project.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllAbout()
+        public async Task<IActionResult> GetAboutList()
         {
             var allAbout = await _mediator.Send(new GetAboutQuery());
             return Ok(allAbout);
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateAbout(CreateAboutCommand createAboutCommand)
+        {
+            await _mediator.Send(createAboutCommand);
+            return Ok("About Basarili Bir Sekilde Eklendi");
         }
     }
 }

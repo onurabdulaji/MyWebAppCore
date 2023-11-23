@@ -1,7 +1,9 @@
 ﻿using MediatR;
+using Project.BusinessLayer.ManagerServices.Abstracts;
 using Project.BusinessLayer.Mediator.Queries.AboutQuery;
 using Project.BusinessLayer.Mediator.Result.AboutResult;
 using Project.DataAccessLayer.Repositories.Abstracts;
+using Project.EntityLayer.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,28 +14,24 @@ namespace Project.BusinessLayer.Mediator.Handlers.AboutHandlers
 {
     public class GetAboutQueryHandler : IRequestHandler<GetAboutQuery, List<GetAboutQueryResult>>
     {
-        private readonly IAboutRepository _aboutRepository;
+        IAboutManager _aboutManager;
 
-        public GetAboutQueryHandler(IAboutRepository aboutRepository)
+        public GetAboutQueryHandler(IAboutManager aboutManager)
         {
-            _aboutRepository = aboutRepository;
+            _aboutManager = aboutManager;
         }
 
         public async Task<List<GetAboutQueryResult>> Handle(GetAboutQuery request, CancellationToken cancellationToken)
         {
-            var aboutResult = _aboutRepository.GetList();
-            return aboutResult.Select(x => new GetAboutQueryResult
+            var values = await _aboutManager.TGetAllAsync();
+            return values.Select(x => new GetAboutQueryResult
             {
                 AboutID = x.AboutID,
                 AboutTitle = x.AboutTitle,
                 AboutDescriptionOne = x.AboutDescriptionOne,
-                AboutDescriptionTwo = x.AboutDescriptionTwo,
-                AboutDescriptionThree = x.AboutDescriptionThree,
-                AboutDescriptionFour = x.AboutDescriptionFour,
-                AboutImage = x.AboutImage,
-                AboutCV = x.AboutCV,
-                AboutStatus = x.AboutStatus,
             }).ToList();
         }
     }
 }
+
+

@@ -27,5 +27,13 @@ namespace Project.DataAccessLayer.Repositories.Abstracts
         Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> exp);
         Task<T> GetByIdAsync(int id);
 
+
+        // Cqrs
+
+        Task<List<T>> GetAllAsync();
+        Task CreateAsync(T entity);
+        Task UpdateAsync(T entity);
+        Task RemoveAsync(T entity);
+
     }
 }
