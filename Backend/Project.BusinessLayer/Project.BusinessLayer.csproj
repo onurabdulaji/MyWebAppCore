@@ -1,23 +1,26 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Project.DataAccessLayer\Project.DataAccessLayer.csproj" />
-    <ProjectReference Include="..\Project.DTOLayer\Project.DTOLayer.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Project.DTOLayer\Project.DTOLayer.csproj" />
+		<ProjectReference Include="..\Project.DataAccessLayer\Project.DataAccessLayer.csproj">
+			<PrivateAssets>All</PrivateAssets>
+		</ProjectReference>
+	</ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Validations\" />
-  </ItemGroup>
+	<ItemGroup>
+		<Folder Include="Resolvers\Configurations\" />
+		<Folder Include="Validations\" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="11.8.1" />
-    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.8.1" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="FluentValidation" Version="11.8.1" />
+		<PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.8.1" />
+	</ItemGroup>
 
 </Project>
