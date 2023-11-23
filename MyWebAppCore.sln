@@ -7,17 +7,26 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Backend", "Backend", "{6BFA
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontend", "Frontend", "{43F8129D-1159-4546-BF3C-9C4FCF089413}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.WebApi", "Backend\Project.WebApi\Project.WebApi.csproj", "{E18F6623-484C-44D8-A618-F5DC0D58AFED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project.WebApi", "Backend\Project.WebApi\Project.WebApi.csproj", "{E18F6623-484C-44D8-A618-F5DC0D58AFED}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9B36C643-6191-4CD8-8E5F-EFC4197CC585} = {9B36C643-6191-4CD8-8E5F-EFC4197CC585}
+		{C0E4C55F-B4CC-4BF4-BEF7-5A3EEC0087BB} = {C0E4C55F-B4CC-4BF4-BEF7-5A3EEC0087BB}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.EntityLayer", "Backend\Project.EntityLayer\Project.EntityLayer.csproj", "{9B36C643-6191-4CD8-8E5F-EFC4197CC585}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project.EntityLayer", "Backend\Project.EntityLayer\Project.EntityLayer.csproj", "{9B36C643-6191-4CD8-8E5F-EFC4197CC585}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.DataAccessLayer", "Backend\Project.DataAccessLayer\Project.DataAccessLayer.csproj", "{C0E4C55F-B4CC-4BF4-BEF7-5A3EEC0087BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project.DataAccessLayer", "Backend\Project.DataAccessLayer\Project.DataAccessLayer.csproj", "{C0E4C55F-B4CC-4BF4-BEF7-5A3EEC0087BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.BusinessLayer", "Backend\Project.BusinessLayer\Project.BusinessLayer.csproj", "{25367D79-D4DE-443F-A406-3BCC49852B23}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project.BusinessLayer", "Backend\Project.BusinessLayer\Project.BusinessLayer.csproj", "{25367D79-D4DE-443F-A406-3BCC49852B23}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.DTOLayer", "Backend\Project.DTOLayer\Project.DTOLayer.csproj", "{38664CB7-11DB-459C-8EC1-016C0B972A5C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project.DTOLayer", "Backend\Project.DTOLayer\Project.DTOLayer.csproj", "{38664CB7-11DB-459C-8EC1-016C0B972A5C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.MVCUI", "Frontend\Project.MVCUI\Project.MVCUI.csproj", "{BA5F33B7-38B1-4273-B6A3-4FA266A771A7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{568A2C6F-555B-41F7-9494-6C3FD211C884}"
+	ProjectSection(SolutionItems) = preProject
+		Adimlar.html = Adimlar.html
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
