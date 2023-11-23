@@ -8,10 +8,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Project.DataAccessLayer\Project.DataAccessLayer.csproj" />
+    <ProjectReference Include="..\Project.DTOLayer\Project.DTOLayer.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Resolvers\Services\AutoMapper\" />
     <Folder Include="Validations\" />
   </ItemGroup>
 
