@@ -7,7 +7,7 @@ using Project.BusinessLayer.Resolvers.Services.Mediator;
 using Project.BusinessLayer.Resolvers.Services.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
-// Add services to the container.
+// Add services to the container. // Servislerin Eklencegi Kisim
 builder.Services.ContextResolver();
 builder.Services.IdentityResolver();
 builder.Services.RepositoryResolver();
