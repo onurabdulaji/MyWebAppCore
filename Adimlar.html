@@ -4,15 +4,554 @@
 <head>
     <meta charset="utf-8" />
     <title>Proje Adimlari</title>
+    <style>
+        code {
+            font-family: Consolas,"courier new";
+            color: crimson;
+            background-color: #f1f1f1;
+            padding: 2px;
+            font-size: 105%;
+            overflow: hidden;
+        }
+    </style>
 </head>
 <body>
-    <h1>Portfolio Projesi Adim - Adim Kullanimi</h1>
+
+    <h1>Portfolio Projesi Adimlar</h1>
 
     <br />
     <br />
+
+    <h2>N - Katmanli Mimari</h2>
+    <h2>WebApi </h2>
+    <h2>EntityLayer </h2>
+    <h2>DataAccessLayer </h2>
+    <h2>BusinessLayer eklendi</h2>
+    <h2>DTO eklendi</h2>
+    <h2>Common Eklenecek</h2>
+
+    <br />
     <br />
 
-    <p>N - Katmanli Mimari Yapisi Eklendi</p>
-    <p>Web Api Eklendi</p>
+
+    <h2>EntityL icinde :  Klasorler eklendi </h2>
+    <ul>
+        <li>Enums - Enumlar tanimlandi</li>
+        <li>Interfaces - Entity interfacesi tanimlandi.</li>
+        <li>Models - Context siniflari tanimlandi.</li>
+    </ul>
+
+    <br />
+    <br />
+
+    <h2>DAL icinde :  Klasorler eklendi </h2>
+    <ul>
+        <li>Configurations - her entity icin fleunt api konfigurasyonu tanimlandi.</li>
+        <li>Context - MyContext burada olusturuldu ve fluent api ayarlamalari burada eklenildi.</li>
+        <li>Repositories - Repository Design Pattern uygulandi , Generic bir yapi kullanildi.</li>
+    </ul>
+
+    <h2>BAL icinde :  Klasorler eklendi </h2>
+    <ul>
+        <li>ManagerServices -  Servis ve Managerler yazildi. Repository design pattern'e uygun bir sekilde.</li>
+        <li>Mediator - Mediator CQRS design pattern kullanilacak.</li>
+        <li>
+            Resolver - Servis ve Ayarlamalari BAL icinde tutmak ornek : AutoMapper , Context , Identity , Mediator , Repositories ,
+            bunun baslica amaci BAL > DAL katmanini referans aldiginda , UI ve API katmani da BAL katmanini referans almasi.
+            Ama UI ve API kesinlikle DAL katmanina erisim saglamamali , cunku BAL tarafindaki validasyonlar gecersiz kilinabilir.
+            Ayni zamanda Context ve Diger ayar ve servisleri te biz Endpoint aracigiliyla UI ve API tarafina yollamaktayiz.
+        </li>
+        <li>
+            Validations - sinif ve dto'larin validasyonlarinin yapilacak yeri , FluentValidation kullanilmasi kararlastirildi.
+        </li>
+    </ul>
+    <br />
+    <br />
+
+    <h2>Enum Olusturulmasi - Orneklerle</h2>
+    <code>
+        public enum DataStatus
+        {
+        Inserted = 1,
+
+        Deleted = 2,
+
+        Updated = 3,
+        }
+    </code>
+    <br />
+    <br />
+
+    <h2>IEntity Olusturulmasi - Orneklerle</h2>
+    <code>
+        public interface IEntity
+        {
+        public DateTime InsertedDate { get; set; }
+        public DateTime? UpdatedDate { get; set; }
+        public DateTime? DeletedDate { get; set; }
+        public DataStatus Status { get; set; }
+        }
+    </code>
+    <br />
+    <br />
+
+    <h2>Sinif Olusturulmasi - Orneklerle</h2>
+    <code>
+        public class About : IEntity
+        {
+        public About()
+        {
+        InsertedDate = DateTime.Now;
+        Status = DataStatus.Inserted;
+        }
+
+        public int AboutID { get; set; }
+        public string? AboutTitle { get; set; }
+        public string? AboutDescriptionOne { get; set; }
+        public string? AboutDescriptionTwo { get; set; }
+        public string? AboutDescriptionThree { get; set; }
+        public string? AboutDescriptionFour { get; set; }
+        public string? AboutImage { get; set; }
+        public string? AboutCV { get; set; }
+        public bool AboutStatus { get; set; }
+        public DateTime InsertedDate { get; set; }
+        public DateTime? UpdatedDate { get; set; }
+        public DateTime? DeletedDate { get; set; }
+        public DataStatus Status { get; set; }
+        }
+    </code>
+    <br />
+    <br />
+
+    <h2>Identity Sinif Olusturulmasi - Orneklerle</h2>
+    <code>
+        public class AppUser : IdentityUser<.int>
+            , IEntity
+            {
+            public AppUser()
+            {
+            InsertedDate = DateTime.Now;
+            Status = DataStatus.Inserted;
+            }
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+            // Daha fazla prop eklenecek.
+            public DateTime InsertedDate { get; set; }
+            public DateTime? UpdatedDate { get; set; }
+            public DateTime? DeletedDate { get; set; }
+            public DataStatus Status { get; set; }
+            }
+    </code>
+    <br />
+    <br />
+
+
+    <h2>Base Ayarlama Olusturulmasi - Orneklerle</h2>
+    <code>
+        public class BaseConfiguration<.T>
+            : IEntityTypeConfiguration<.T>
+                where T : class, IEntity
+                {
+                public virtual void Configure(EntityTypeBuilder<.T>
+                    builder)
+                    {
+                    //
+                    }
+                    }
+    </code>
+    <br />
+    <br />
+
+    <h2>Bir Sinifin Base Ayardan Miras Alma -  Ayarlama Olusturulmasi - Orneklerle</h2>
+    <code>
+        public class AppUserConfiguration : BaseConfiguration<.AppUser>
+            {
+            public override void Configure(EntityTypeBuilder<.AppUser>
+                builder)
+                {
+                base.Configure(builder);
+                builder.HasKey(x => x.Id);
+                }
+                }
+    </code>
+    <br />
+    <br />
+
+    <h2>ContextDb Olusturulmasi - Orneklerle</h2>
+    <code>
+        public class MyContext : IdentityDbContext<.AppUser, .AppRole, .int>
+            {
+            public MyContext(DbContextOptions<.MyContext>
+                opt) : base(opt)
+                {
+                //
+                }
+
+                protected override void OnModelCreating(ModelBuilder builder)
+                {
+                base.OnModelCreating(builder);
+                builder.ApplyConfiguration(new AboutConfiguration());
+                builder.ApplyConfiguration(new AppRoleConfiguration());
+                builder.ApplyConfiguration(new AppUserConfiguration());
+                builder.ApplyConfiguration(new ContactConfiguration());
+                builder.ApplyConfiguration(new MyClientConfiguration());
+                builder.ApplyConfiguration(new ServiceConfiguration());
+                builder.ApplyConfiguration(new TestimonialConfiguration());
+                builder.ApplyConfiguration(new WorkConfiguration());
+                }
+
+                public DbSet<.About>
+                    Abouts { get; set; }
+                    public DbSet<.AppRole>
+                        AppRoles { get; set; }
+                        public DbSet<.AppUser>
+                            AppUsers { get; set; }
+                            public DbSet<.Contact>
+                                Contacts { get; set; }
+                                public DbSet<.MyClient>
+                                    MyClients { get; set; }
+                                    public DbSet<.Service>
+                                        Services { get; set; }
+                                        public DbSet<.Testimonial>
+                                            Testimonials { get; set; }
+                                            public DbSet<.Work>
+                                                Works { get; set; }
+                                                }
+    </code>
+    <br />
+    <br />
+
+    <h2>IRepositories Olusturulmasi - Orneklerle</h2>
+    <code>
+        public interface IRepository<.T>
+            where T : class
+            {
+            // Modify  Commands
+            void Add(T entity);
+            void Delete(T entity);
+            void Update(T entity);
+            // List Commands
+            List<.T>
+                GetList();
+                // Find Commands
+                T GetById(int id);
+                // Linq  Commands
+                List<.T>
+                    GetListFilter(Expression<.Func<T, bool>> expression);
+    T FirstOrDefault(Expression<.Func<T, bool>> expression);
+    // Queryable Commands
+    IQueryable<.T> GetListQuery();
+    // Async Methods
+    Task AddAsync(T entity);
+    Task<.T> FirstOrDefaultAsync(Expression<.Func<T, bool>> exp);
+    Task<.T> GetByIdAsync(int id);
+
+
+    // Cqrs
+
+    Task<.List<.T>> GetAllAsync();
+    Task CreateAsync(T entity);
+    Task UpdateAsync(T entity);
+    Task RemoveAsync(T entity);
+
+}
+    </code>
+    <br />
+    <br />
+
+    <h2>BaseRepository Olusturulmasi - Orneklerle</h2>
+    <code>
+        public class BaseRepository<T>
+            : IRepository<T>
+                where T : class, IEntity
+                {
+                private readonly MyContext _db;
+
+                public BaseRepository(MyContext db)
+                {
+                _db = db;
+                }
+
+                public void Add(T entity)
+                {
+                _db.Add(entity);
+                _db.SaveChanges();
+                }
+
+                public async Task AddAsync(T entity)
+                {
+                await _db.AddAsync(entity);
+                await _db.SaveChangesAsync();
+                }
+
+                public async Task CreateAsync(T entity)
+                {
+                await _db.Set<T>
+                    ().AddAsync(entity);
+                    await _db.SaveChangesAsync();
+                    }
+
+                    public void Delete(T entity)
+                    {
+                    _db.Remove(entity);
+                    _db.SaveChanges();
+                    }
+
+                    public T FirstOrDefault(Expression<Func<T, bool>> expression)
+    {
+        return _db.Set<T>().FirstOrDefault(expression);
+    }
+
+    public async Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> exp)
+    {
+        return await _db.Set<T>().FirstOrDefaultAsync(exp);
+    }
+
+    public async Task<List<T>> GetAllAsync()
+    {
+        return await _db.Set<T>().ToListAsync();
+    }
+
+    public T GetById(int id)
+    {
+        return _db.Set<T>().Find(id);
+    }
+
+    public async Task<T> GetByIdAsync(int id)
+    {
+        return await _db.Set<T>().FindAsync(id);
+    }
+
+    public List<T> GetList()
+    {
+        return _db.Set<T>().ToList();
+    }
+
+    public List<T> GetListFilter(Expression<Func<T, bool>> expression)
+    {
+        return _db.Set<T>().Where(expression).ToList();
+    }
+
+    public IQueryable<T> GetListQuery()
+    {
+        return _db.Set<T>().AsQueryable();
+    }
+
+    public async Task RemoveAsync(T entity)
+    {
+        _db.Set<T>().Remove(entity);
+        await _db.SaveChangesAsync();
+    }
+
+    public void Update(T entity)
+    {
+        _db.Update(entity);
+        _db.SaveChanges();
+    }
+
+    public async Task UpdateAsync(T entity)
+    {
+        _db.Set<T>().Update(entity);
+        await _db.SaveChangesAsync();
+    }
+    </code>
+    <br />
+    <br />
+
+    <hr />
+    <hr />
+    <hr />
+
+    <h2>IManager Olusturulmasi - Orneklerle</h2>
+    <code>
+        public interface IManager<T>
+            where T : class, IEntity
+            {
+            // Modify  Commands
+            void TAdd(T entity);
+            void TDelete(T entity);
+            void TUpdate(T entity);
+            // List Commands
+            List<T>
+                TGetList();
+                // Find Commands
+                T TGetById(int id);
+                // Linq  Commands
+                List<T>
+                    TGetListFilter(Expression<Func<T, bool>> expression);
+    T TFirstOrDefault(Expression<Func<T, bool>> expression);
+    // Queryable Commands
+    IQueryable<T> TGetListQuery();
+    // Async Methods
+    Task TAddAsync(T entity);
+    Task<T> TFirstOrDefaultAsync(Expression<Func<T, bool>> exp);
+    Task<T> TGetByIdAsync(int id);
+
+    // Cqrs
+
+    Task<List<T>> TGetAllAsync();
+    Task TCreateAsync(T entity);
+    Task TUpdateAsync(T entity);
+    Task TRemoveAsync(T entity);
+}
+    </code>
+    <br />
+    <br />
+
+    <hr />
+    <hr />
+    <hr />
+
+    <h2>BaseManager Olusturulmasi - Orneklerle</h2>
+    <code>
+        public class BaseManager<T>
+            : IManager<T>
+                where T : class, IEntity
+                {
+                protected IRepository<T>
+                    _iRepository;
+
+                    public BaseManager(IRepository<T>
+                        iRepository)
+                        {
+                        _iRepository = iRepository;
+                        }
+
+                        public void TAdd(T entity)
+                        {
+                        _iRepository.Add(entity);
+                        }
+
+                        public async Task TAddAsync(T entity)
+                        {
+                        await _iRepository.AddAsync(entity);
+                        }
+
+                        public async Task TCreateAsync(T entity)
+                        {
+                        await _iRepository.CreateAsync(entity);
+                        }
+
+                        public void TDelete(T entity)
+                        {
+                        _iRepository.Delete(entity);
+                        }
+
+                        public T TFirstOrDefault(Expression<Func<T, bool>> expression)
+     {
+         return _iRepository.FirstOrDefault(expression);
+     }
+
+     public async Task<T> TFirstOrDefaultAsync(Expression<Func<T, bool>> exp)
+     {
+         return await _iRepository.FirstOrDefaultAsync(exp);
+     }
+
+     public async Task<List<T>> TGetAllAsync()
+     {
+         return await _iRepository.GetAllAsync();
+     }
+
+     public T TGetById(int id)
+     {
+         return _iRepository.GetById(id);
+     }
+
+     public async Task<T> TGetByIdAsync(int id)
+     {
+         return await _iRepository.GetByIdAsync(id);
+     }
+
+     public List<T> TGetList()
+     {
+         return _iRepository.GetList();
+     }
+
+     public List<T> TGetListFilter(Expression<Func<T, bool>> expression)
+     {
+         return _iRepository.GetListFilter(expression);
+     }
+
+     public IQueryable<T> TGetListQuery()
+     {
+         return _iRepository.GetListQuery();
+     }
+
+     public async Task TRemoveAsync(T entity)
+     {
+         await _iRepository.RemoveAsync(entity);
+     }
+
+     public void TUpdate(T entity)
+     {
+         _iRepository.Update(entity);
+     }
+
+     public async Task TUpdateAsync(T entity)
+     {
+         await _iRepository.UpdateAsync(entity);
+     }
+ }
+    </code>
+    <br />
+    <br />
+
+
+    <hr />
+    <hr />
+    <hr />
+
+    <h2>Mediator Olusuturulmasi - Orneklerle</h2>
+    <ul>
+        <li>Commands</li>
+        <li>Handlers</li>
+        <li>Queries</li>
+        <li>Result</li>
+    </ul>
+    <h2>Result - Ornekler</h2>
+    <code>
+        public class GetAboutQueryResult <br />
+        {<br />
+        public int AboutID { get; set; } <br />
+        public string? AboutTitle { get; set; } <br />
+        public string? AboutDescriptionOne { get; set; }<br />
+        }
+    </code>
+    <br />
+    <br />
+    <h2>Queries - Ornekler</h2>
+    <code>
+        public class GetAboutQuery : IRequest<.List<.GetAboutQueryResult>>
+ {
+ }
+    </code>
+    <br />
+    <br />
+    <h2>Handlers - Ornekler</h2>
+    <code>
+        public class GetAboutQueryHandler : IRequestHandler<.GetAboutQuery, List<.GetAboutQueryResult>>
+{
+    IAboutManager _aboutManager;
+
+    public GetAboutQueryHandler(IAboutManager aboutManager)
+    {
+        _aboutManager = aboutManager;
+    }
+
+    public async Task<,List<,GetAboutQueryResult>> Handle(GetAboutQuery request, CancellationToken cancellationToken)
+    {
+        var values = await _aboutManager.TGetAllAsync();
+        return values.Select(x => new GetAboutQueryResult
+        {
+            AboutID = x.AboutID,
+            AboutTitle = x.AboutTitle,
+            AboutDescriptionOne = x.AboutDescriptionOne,
+        }).ToList();
+    }
+}
+    </code>
+    <br />
+    <br />
+
 </body>
 </html>
