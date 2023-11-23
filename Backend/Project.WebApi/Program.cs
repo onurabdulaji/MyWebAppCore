@@ -1,12 +1,19 @@
+using Project.BusinessLayer.Resolvers.Services.AutoMapper;
 using Project.BusinessLayer.Resolvers.Services.Context;
 using Project.BusinessLayer.Resolvers.Services.Identity;
+using Project.BusinessLayer.Resolvers.Services.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.ContextResolver();
 builder.Services.IdentityResolver();
+builder.Services.RepositoryResolver();
+builder.Services.MapperResolver();
 builder.Services.AddControllers();
+
+
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
