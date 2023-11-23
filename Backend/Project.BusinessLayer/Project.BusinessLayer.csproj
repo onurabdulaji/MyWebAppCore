@@ -10,4 +10,10 @@
     <ProjectReference Include="..\Project.DataAccessLayer\Project.DataAccessLayer.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ManagerServices\" />
+    <Folder Include="Resolvers\Configurations\" />
+    <Folder Include="Validations\" />
+  </ItemGroup>
+
 </Project>
