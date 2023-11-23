@@ -11,7 +11,7 @@ namespace Project.BusinessLayer.Resolvers.Services.AutoMapper
     {
         public static IServiceCollection MapperResolver(this IServiceCollection services)
         {
-            services.AddAutoMapper(typeof(AutoMapperDependencies));
+            services.AddAutoMapper(typeof(AutoMapperDependencies).Assembly);
             return services;
         }
     }

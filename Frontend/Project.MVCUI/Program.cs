@@ -1,7 +1,18 @@
+using Project.BusinessLayer.Resolvers.Services.AutoMapper;
+using Project.BusinessLayer.Resolvers.Services.Context;
+using Project.BusinessLayer.Resolvers.Services.Identity;
+using Project.BusinessLayer.Resolvers.Services.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.ContextResolver();
+builder.Services.IdentityResolver();
+builder.Services.RepositoryResolver();
+builder.Services.MapperResolver();
+builder.Services.AddControllers();
+builder.Services.AddHttpClient();
 
 var app = builder.Build();
 
@@ -15,13 +26,12 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+app.UseAuthentication();
 app.UseRouting();
-
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Default}/{action=Index}/{id?}");
 
 app.Run();
