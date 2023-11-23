@@ -26,5 +26,6 @@ namespace Project.DataAccessLayer.Repositories.Abstracts
         Task AddAsync(T entity);
         Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> exp);
         Task<T> GetByIdAsync(int id);
+
     }
 }

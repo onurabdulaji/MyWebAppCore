@@ -15,9 +15,6 @@
 
 	<ItemGroup>
 		<Folder Include="Mediator\Commands\" />
-		<Folder Include="Mediator\Handlers\" />
-		<Folder Include="Mediator\Result\" />
-		<Folder Include="Mediator\Queries\" />
 		<Folder Include="Resolvers\Configurations\" />
 		<Folder Include="Validations\" />
 	</ItemGroup>

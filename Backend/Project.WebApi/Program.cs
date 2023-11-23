@@ -1,7 +1,9 @@
+using MediatR;
 using Microsoft.OpenApi.Models;
 using Project.BusinessLayer.Resolvers.Services.AutoMapper;
 using Project.BusinessLayer.Resolvers.Services.Context;
 using Project.BusinessLayer.Resolvers.Services.Identity;
+using Project.BusinessLayer.Resolvers.Services.Mediator;
 using Project.BusinessLayer.Resolvers.Services.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +13,7 @@ builder.Services.IdentityResolver();
 builder.Services.RepositoryResolver();
 builder.Services.MapperResolver();
 builder.Services.AddControllers();
+builder.Services.AddMediatorService(builder.Configuration);
 builder.Services.AddCors(opt =>
 {
     opt.AddPolicy("PortfolioApi", opts =>
