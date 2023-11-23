@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <Folder Include="ManagerServices\" />
+    <Folder Include="Resolvers\Services\Repositories\" />
     <Folder Include="Validations\" />
   </ItemGroup>
 
