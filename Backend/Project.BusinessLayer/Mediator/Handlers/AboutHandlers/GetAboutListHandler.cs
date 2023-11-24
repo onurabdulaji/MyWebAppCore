@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using Project.BusinessLayer.ManagerServices.Abstracts;
 using Project.BusinessLayer.Mediator.Queries.AboutQuery;
-using Project.BusinessLayer.Mediator.Result.AboutResult;
-using Project.EntityLayer.Models;
+using Project.DataAccessLayer.Repositories.Abstracts;
+using Project.DTOLayer.ApiDTO.AboutDTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,19 +11,19 @@ using System.Threading.Tasks;
 
 namespace Project.BusinessLayer.Mediator.Handlers.AboutHandlers
 {
-    public class GetAboutQueryHandler : IRequestHandler<GetAboutQuery, List<GetAboutQueryResult>>
+    public class GetAboutListHandler : IRequestHandler<GetAboutQuery, List<AboutDetails>>
     {
         private readonly IAboutManager _aboutManager;
 
-        public GetAboutQueryHandler(IAboutManager aboutManager)
+        public GetAboutListHandler(IAboutManager aboutManager)
         {
             _aboutManager = aboutManager;
         }
 
-        public async Task<List<GetAboutQueryResult>> Handle(GetAboutQuery request, CancellationToken cancellationToken)
+        public async Task<List<AboutDetails>> Handle(GetAboutQuery request, CancellationToken cancellationToken)
         {
-            var result = await _aboutManager.TGetAllAsync();
-            return result.Select(x => new GetAboutQueryResult
+            var values = await _aboutManager.TGetAllAsync();
+            return values.Select(x => new AboutDetails
             {
                 AboutID = x.AboutID,
                 AboutTitle = x.AboutTitle,
@@ -33,7 +33,7 @@ namespace Project.BusinessLayer.Mediator.Handlers.AboutHandlers
                 AboutDescriptionFour = x.AboutDescriptionFour,
                 AboutImage = x.AboutImage,
                 AboutCV = x.AboutCV,
-                AboutStatus = x.AboutStatus
+                AboutStatus = x.AboutStatus,
             }).ToList();
         }
     }

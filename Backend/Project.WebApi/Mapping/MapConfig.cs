@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using Project.DTOLayer.ApiDTO.AboutDtos;
-using Project.EntityLayer.Models;
 
 namespace Project.WebApi.Mapping
 {
@@ -8,8 +6,7 @@ namespace Project.WebApi.Mapping
     {
         public MapConfig()
         {
-            CreateMap<CreateAboutDTO, About>().ReverseMap();
-            CreateMap<GetAboutDto, About>().ReverseMap();
+
         }
     }
 }

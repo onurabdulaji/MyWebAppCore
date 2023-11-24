@@ -26,8 +26,7 @@ namespace Project.WebApi.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAbout(int id)
         {
-            var aboutList = await _mediator.Send(new GetAboutByIdQuery(id));
-            return Ok(aboutList);
+            return Ok();
         }
         [HttpPost]
         public async Task<IActionResult> CreateAbout(CreateAboutCommand createAboutCommand)
