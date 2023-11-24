@@ -20,5 +20,6 @@ namespace Project.EntityLayer.Models
         public DateTime? UpdatedDate { get; set; }
         public DateTime? DeletedDate { get; set; }
         public DataStatus Status { get; set; }
+        public RoleStatus RoleStatus { get; set; }
     }
 }
