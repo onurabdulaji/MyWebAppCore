@@ -9,6 +9,7 @@ namespace Project.WebApi.Mapping
         public MapConfig()
         {
             CreateMap<CreateAboutDTO, About>().ReverseMap();
+            CreateMap<GetAboutDto, About>().ReverseMap();
         }
     }
 }

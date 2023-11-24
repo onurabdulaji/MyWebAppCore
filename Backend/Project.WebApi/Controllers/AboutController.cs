@@ -23,6 +23,12 @@ namespace Project.WebApi.Controllers
             var aboutList = await _mediator.Send(new GetAboutQuery());
             return Ok(aboutList);
         }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetAbout(int id)
+        {
+            var aboutList = await _mediator.Send(new GetAboutByIdQuery(id));
+            return Ok(aboutList);
+        }
         [HttpPost]
         public async Task<IActionResult> CreateAbout(CreateAboutCommand createAboutCommand)
         {
