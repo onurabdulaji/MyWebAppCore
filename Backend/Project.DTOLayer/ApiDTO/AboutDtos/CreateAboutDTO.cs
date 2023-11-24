@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace Project.DTOLayer.ApiDTO.AboutDtos
 {
-    public class CreateAboutVM
+    public class CreateAboutDTO
     {
         public string AboutTitle { get; set; }
         public string AboutDescriptionOne { get; set; }
+        public string AboutDescriptionTwo { get; set; }
     }
 }

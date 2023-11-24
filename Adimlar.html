@@ -17,28 +17,30 @@
 </head>
 <body>
 
-    <h1>Portfolio Projesi Adimlar</h1>
+
+    <h1>Onur Abdulaji Portfolio Core - Web Uygulamasi</h1>
+    <h2>Portfolio Projesi Adimlar</h2>
 
     <br />
     <br />
 
-    <h2>N - Katmanli Mimari</h2>
-    <h2>WebApi </h2>
-    <h2>EntityLayer </h2>
-    <h2>DataAccessLayer </h2>
-    <h2>BusinessLayer eklendi</h2>
-    <h2>DTO eklendi</h2>
-    <h2>Common Eklenecek</h2>
+    <h2>N - Katmanli Mimari - Kuruldu</h2>
+    <h2>WebApi - Kuruldu</h2>
+    <h2>EntityLayer  - Kuruldu</h2>
+    <h2>DataAccessLayer  - Kuruldu</h2>
+    <h2>BusinessLayer - Kuruldu </h2>
+    <h2>DTO - Kuruldu</h2>
+    <h2>Common - Kuruldu</h2>
 
     <br />
     <br />
 
 
-    <h2>EntityL icinde :  Klasorler eklendi </h2>
+    <h2>EntityL icinde :  Entity Siniflarimizi Tutacak olan katmandir </h2>
     <ul>
-        <li>Enums - Enumlar tanimlandi</li>
-        <li>Interfaces - Entity interfacesi tanimlandi.</li>
-        <li>Models - Context siniflari tanimlandi.</li>
+        <li>Enums - Enumlar sayıları anlamlı şekilde isimlendirerek kullanabilmeye izin verir.</li>
+        <li>Interfaces - Entity interfacesi soyutlama işlemi yapılmasını sağlayan nesnelerdir..</li>
+        <li>Models - Entity siniflarimizdir.</li>
     </ul>
 
     <br />
@@ -501,57 +503,51 @@
     <hr />
     <hr />
 
-    <h2>Mediator Olusuturulmasi - Orneklerle</h2>
+    <h2>Mediator Kutuphanesi - Burada Mediator kutuphanesini kullanmak amaclanmistr</h2>
+    <h3>Mediator su sekilde calismaktadir.</h3>
+    <h3>DTO lar ile kullanilabilir.</h3>
     <ul>
-        <li>Commands</li>
-        <li>Handlers</li>
-        <li>Queries</li>
-        <li>Result</li>
+        <li>Commands - C , U , D islemlerinin command olarak verilecek yeri</li>
+        <li>Handlers - Burada ise Command ve Queries islemlerinin implementasyoni yapilir.</li>
+        <li>Queries - Burada Result islemlerinin devami gelir.</li>
+        <li>Result - Daha cok response modeli olarak calisir.</li>
     </ul>
-    <h2>Result - Ornekler</h2>
+
+    <h2>Ornek Olarak</h2>
+
+    <p>GetAboutQueryResult - Burada About sinifi icin bir listeleme yapmaktayiz</p>
     <code>
-        public class GetAboutQueryResult <br />
-        {<br />
-        public int AboutID { get; set; } <br />
-        public string? AboutTitle { get; set; } <br />
-        public string? AboutDescriptionOne { get; set; }<br />
+        public class GetAboutQueryResult
+        {
+        public int AboutID { get; set; }
+        public string? AboutTitle { get; set; }
+        public string? AboutDescriptionOne { get; set; }
+        public string? AboutDescriptionTwo { get; set; }
+        public string? AboutDescriptionThree { get; set; }
+        public string? AboutDescriptionFour { get; set; }
+        public string? AboutImage { get; set; }
+        public string? AboutCV { get; set; }
+        public bool AboutStatus { get; set; }
         }
     </code>
-    <br />
-    <br />
-    <h2>Queries - Ornekler</h2>
+    <p>About sinifi icin istedigimiz prop lari alir bu sinif icine atariz.</p>
+    <hr />
+    <p>GetAboutQuery - Burada GetAboutQueryResult icin islemleri yapariz</p>
+    <p>Onemli Detay : GetAboutQuery herzaman bir IRequest ten miras alir ve <.List<.GetAboutQueryResult>> soyle bir yapi dondurur.</p>
     <code>
         public class GetAboutQuery : IRequest<.List<.GetAboutQueryResult>>
- {
- }
-    </code>
-    <br />
-    <br />
-    <h2>Handlers - Ornekler</h2>
-    <code>
-        public class GetAboutQueryHandler : IRequestHandler<.GetAboutQuery, List<.GetAboutQueryResult>>
 {
-    IAboutManager _aboutManager;
-
-    public GetAboutQueryHandler(IAboutManager aboutManager)
-    {
-        _aboutManager = aboutManager;
-    }
-
-    public async Task<,List<,GetAboutQueryResult>> Handle(GetAboutQuery request, CancellationToken cancellationToken)
-    {
-        var values = await _aboutManager.TGetAllAsync();
-        return values.Select(x => new GetAboutQueryResult
-        {
-            AboutID = x.AboutID,
-            AboutTitle = x.AboutTitle,
-            AboutDescriptionOne = x.AboutDescriptionOne,
-        }).ToList();
-    }
 }
     </code>
+    <hr />
+    <hr />
+
     <br />
-    <br />
+
+    <p>GetAboutQueryHandler - Burada GetAboutQuery sinifi icin bir islem yapmaktayiz</p>
+    <p>Onemli Detay : GetAboutQueryHandler herzaman bir IRequestHandler ten miras alir ve <.GetAboutQuery, List<.GetAboutQueryResult>> soyle bir yapi olusur</p>
+
+
 
 </body>
 </html>

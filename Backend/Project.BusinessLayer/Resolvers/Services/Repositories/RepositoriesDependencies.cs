@@ -1,17 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Project.BusinessLayer.ManagerServices.Abstracts;
 using Project.BusinessLayer.ManagerServices.Concretes;
-using Project.BusinessLayer.Mediator.Commands.AboutCommands;
-using Project.BusinessLayer.Mediator.Handlers.AboutHandlers;
-using Project.BusinessLayer.Mediator.Queries.AboutQuery;
-using Project.BusinessLayer.Mediator.Result.AboutResult;
 using Project.DataAccessLayer.Repositories.Abstracts;
 using Project.DataAccessLayer.Repositories.Concretes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Project.BusinessLayer.Resolvers.Services.Repositories
 {

@@ -20,8 +20,8 @@ namespace Project.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAboutList()
         {
-            var allAbout = await _mediator.Send(new GetAboutQuery());
-            return Ok(allAbout);
+            var aboutList = await _mediator.Send(new GetAboutQuery());
+            return Ok(aboutList);
         }
         [HttpPost]
         public async Task<IActionResult> CreateAbout(CreateAboutCommand createAboutCommand)
