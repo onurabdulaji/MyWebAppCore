@@ -30,7 +30,7 @@ namespace Project.WebApi.Controllers
             return Ok(aboutList);
         }
         [HttpPost]
-        public async Task<IActionResult> CreateAbout([FromBody] CreateAboutCommand createAboutCommand)
+        public async Task<IActionResult> CreateAbout(CreateAboutCommand createAboutCommand)
         {
             await _mediator.Send(createAboutCommand);
             return Ok("About Basarili Bir Sekilde Eklendi");

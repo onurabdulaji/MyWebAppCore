@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Project.BusinessLayer.Mediator.Handlers.AboutHandlers
 {
-    public class CreateAboutHandler : IRequestHandler<CreateAboutCommand, CreateAboutDTO>
+    public class CreateAboutHandler : IRequestHandler<CreateAboutCommand>
     {
         private readonly IAboutManager _aboutManager;
         private readonly IMapper _mapper;
@@ -23,16 +23,15 @@ namespace Project.BusinessLayer.Mediator.Handlers.AboutHandlers
             _aboutManager = aboutManager;
         }
 
-        public async Task<CreateAboutDTO> Handle(CreateAboutCommand request, CancellationToken cancellationToken)
+        public async Task Handle(CreateAboutCommand request, CancellationToken cancellationToken)
         {
-            var newAbout = _mapper.Map<About>(request);
-            await _aboutManager.TCreateAsync(newAbout);
-            return new CreateAboutDTO
+            await _aboutManager.TCreateAsync(new About
             {
-                AboutTitle = newAbout.AboutTitle,
-                AboutDescriptionOne = newAbout.AboutDescriptionOne,
-                AboutDescriptionTwo = newAbout.AboutDescriptionTwo,
-            };
+                AboutTitle = request.AboutTitle,
+                AboutDescriptionOne = request.AboutDescriptionOne,
+                AboutDescriptionTwo = request.AboutDescriptionTwo,
+                AboutStatus = request.AboutStatus,
+            });
         }
     }
 }
